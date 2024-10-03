@@ -8,8 +8,7 @@ namespace tarefas.Corp.Entities
 {
     public partial class SessionEntity
     {
-        public int SessionId { get; set; }
-        public string UserNickName { get; set; }
+        public long SessionId { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

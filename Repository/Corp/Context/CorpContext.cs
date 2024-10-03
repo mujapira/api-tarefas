@@ -20,15 +20,11 @@ namespace tarefas.Corp.Context
             {
                 entity.ToTable("Tasks");
                 entity.HasKey(e => e.Id);
-
-                entity.HasOne<SessionEntity>()
-                      .WithMany()
-                      .HasForeignKey(e => e.Id)
-                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<SessionEntity>(entity =>
             {
+                entity.ToTable("Sessions");
                 entity.HasKey(e => e.SessionId);
             });
 

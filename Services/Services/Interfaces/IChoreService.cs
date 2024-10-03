@@ -10,11 +10,10 @@ namespace Services.Services.Interfaces
 {
     public interface IChoreService
     {
-        Task<List<ChoreModel>> GetChores(int sessionId);
-        Task<ChoreModel> GetChoreById(int id);
+        Task<List<ChoreModel>> GetChores(long sessionId);
         Task CreateChore(ChoreFormData formData);
-        Task<ChoreModel> UpdateChore(int id, ChoreModel model);
-        Task<bool> DeleteChore(int id);
+        Task UpdateChore(long id);
+        Task DeleteChore(long id);
     }
 
 }

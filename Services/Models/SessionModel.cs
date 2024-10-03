@@ -8,8 +8,7 @@ namespace Services.Models
 {
     public class SessionModel
     {
-        public int SessionId { get; set; }
-        public string UserNickName { get; set; }
+        public long SessionId { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

@@ -28,17 +28,16 @@ namespace Services.Services
         {
             var session = new SessionEntity
             {
-                UserNickName = "",
                 CreatedAt = DateTime.UtcNow
             };
 
             _corpContext.Sessions.Add(session);
             await _corpContext.SaveChangesAsync();
 
-            return new SessionModel { SessionId = session.SessionId, UserNickName = session.UserNickName };
+            return new SessionModel { SessionId = session.SessionId };
         }
 
-        public async Task<bool> GetSession(int sessionId)
+        public async Task<bool> CheckSessionValidity(long sessionId)
         {
             var session = await _corpContext.Sessions.FindAsync(sessionId);
             if (session == null)
@@ -47,7 +46,7 @@ namespace Services.Services
             return false;
         }
 
-        public async Task<bool> EndSession(int sessionId)
+        public async Task<bool> EndSession(long sessionId)
         {
             var session = await _corpContext.Sessions.FindAsync(sessionId);
             if (session == null)

@@ -24,7 +24,7 @@ namespace tarefas.Controllers
         [AllowAnonymous]
         [ProducesResponseType(typeof(List<ChoreModel>), 200)]
         [HttpGet("tarefas/{sessionId}")]
-        public async Task<IActionResult> GetChores(int sessionId)
+        public async Task<IActionResult> GetChores(long sessionId)
         {
             try
             {
@@ -57,20 +57,15 @@ namespace tarefas.Controllers
 
 
         [AllowAnonymous]
-        [ProducesResponseType(typeof(ChoreModel), 200)]
+        [ProducesResponseType(typeof(void), 200)]
         [ProducesResponseType(404)]
         [HttpPut("tarefas/{id}")]
-        public async Task<IActionResult> UpdateChore(int id, [FromBody] ChoreModel model)
+        public async Task<IActionResult> UpdateChore(long id)
         {
             try
             {
-                var updatedChore = await _service.UpdateChore(id, model);
-                if (updatedChore == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(updatedChore);
+                await _service.UpdateChore(id);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -82,17 +77,12 @@ namespace tarefas.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [HttpDelete("tarefas/{id}")]
-        public async Task<IActionResult> DeleteChore(int id)
+        public async Task<IActionResult> DeleteChore(long id)
         {
             try
             {
-                var success = await _service.DeleteChore(id);
-                if (!success)
-                {
-                    return NotFound();
-                }
-
-                return NoContent(); // Retorna 204 No Content
+                await _service.DeleteChore(id);
+                return NoContent();
             }
             catch (Exception ex)
             {

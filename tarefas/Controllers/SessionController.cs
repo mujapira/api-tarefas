@@ -26,13 +26,13 @@ namespace tarefas.Controllers
             return Ok(session);
         }
 
-        [HttpGet("getSession")]
-        public async Task<IActionResult> GetSession()
+        [HttpGet("checkSessionValidity")]
+        public async Task<IActionResult> CheckSessionValidity()
         {
             if (Request.Cookies.ContainsKey("SessionId"))
             {
                 var sessionId = Request.Cookies["SessionId"];
-                var session = await _service.GetSession(int.Parse(sessionId));
+                var session = await _service.CheckSessionValidity(long.Parse(sessionId));
 
                 return Ok(session);
             }
@@ -46,7 +46,7 @@ namespace tarefas.Controllers
             if (Request.Cookies.ContainsKey("SessionId"))
             {
                 var sessionId = Request.Cookies["SessionId"];
-                await _service.EndSession(int.Parse(sessionId));
+                await _service.EndSession(long.Parse(sessionId));
 
                 Response.Cookies.Delete("SessionId");
                 return Ok("Sessão excluída com sucesso.");

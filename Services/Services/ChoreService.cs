@@ -24,7 +24,7 @@ namespace Services.Services
             _corpContext = corpContext;
         }
 
-        public async Task<List<ChoreModel>> GetChores(int sessionId)
+        public async Task<List<ChoreModel>> GetChores(long sessionId)
         {
             var choresEntity = await _corpContext.Chores.Where(x =>
             x.SessionId == sessionId
@@ -58,58 +58,41 @@ namespace Services.Services
                 SessionId = formData.SessionId
             };
 
-            _corpContext.Chores.Add(choreEntity);
-            await _corpContext.SaveChangesAsync();
+            try
+            {
+                _corpContext.Chores.Add(choreEntity);
+                await _corpContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao criar tarefa", ex);
+            }
         }
 
-        public async Task<ChoreModel> GetChoreById(int id)
+        public async Task UpdateChore(long id)
         {
             var choreEntity = await _corpContext.Chores.FindAsync(id);
             if (choreEntity == null)
             {
-                return null;
+                return;
             }
 
-            return new ChoreModel
-            {
-                Id = choreEntity.Id,
-                Title = choreEntity.Title,
-                Description = choreEntity.Description,
-                IsCompleted = choreEntity.IsCompleted,
-                CreatedAt = choreEntity.CreatedAt
-            };
-        }
-
-        public async Task<ChoreModel> UpdateChore(int id, ChoreModel model)
-        {
-            var choreEntity = await _corpContext.Chores.FindAsync(id);
-            if (choreEntity == null)
-            {
-                return null;
-            }
-
-            choreEntity.Title = model.Title;
-            choreEntity.Description = model.Description;
-            choreEntity.IsCompleted = model.IsCompleted;
+            choreEntity.IsCompleted = choreEntity.IsCompleted == true ? false : true;
 
             _corpContext.Chores.Update(choreEntity);
             await _corpContext.SaveChangesAsync();
-
-            return model;
         }
 
-        public async Task<bool> DeleteChore(int id)
+        public async Task DeleteChore(long id)
         {
             var choreEntity = await _corpContext.Chores.FindAsync(id);
             if (choreEntity == null)
             {
-                return false;
+                return;
             }
 
             _corpContext.Chores.Remove(choreEntity);
             await _corpContext.SaveChangesAsync();
-
-            return true;
         }
     }
 }
