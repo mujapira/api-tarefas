@@ -37,7 +37,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder => builder
-           .WithOrigins("http://localhost:3000")
+           .WithOrigins("https://mujapira.com, http://localhost:3000, http://localhost:5000, http://localhost:5174")
            .SetIsOriginAllowedToAllowWildcardSubdomains()
            .AllowAnyMethod()
            .AllowAnyHeader()
