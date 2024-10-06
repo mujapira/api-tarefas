@@ -8,7 +8,7 @@ namespace Services.Models
 {
     public class SessionModel
     {
-        public long SessionId { get; set; }
+        public Guid SessionId { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

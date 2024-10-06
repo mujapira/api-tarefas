@@ -24,7 +24,7 @@ namespace Services.Services
             _corpContext = corpContext;
         }
 
-        public async Task<List<ChoreModel>> GetChores(long sessionId)
+        public async Task<List<ChoreModel>> GetChores(Guid sessionId)
         {
             var choresEntity = await _corpContext.Chores.Where(x =>
             x.SessionId == sessionId
@@ -47,7 +47,7 @@ namespace Services.Services
             return choresResponse;
         }
 
-        public async Task CreateChore(ChoreFormData formData)
+        public async Task<ChoreEntity> CreateChore(ChoreFormData formData)
         {
             var choreEntity = new ChoreEntity
             {
@@ -62,6 +62,8 @@ namespace Services.Services
             {
                 _corpContext.Chores.Add(choreEntity);
                 await _corpContext.SaveChangesAsync();
+
+                return choreEntity;
             }
             catch (Exception ex)
             {

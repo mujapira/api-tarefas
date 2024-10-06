@@ -37,7 +37,7 @@ namespace Services.Services
             return new SessionModel { SessionId = session.SessionId };
         }
 
-        public async Task<bool> CheckSessionValidity(long sessionId)
+        public async Task<bool> CheckSessionValidity(Guid sessionId)
         {
             var session = await _corpContext.Sessions.FindAsync(sessionId);
             if (session == null)
@@ -46,7 +46,16 @@ namespace Services.Services
             return false;
         }
 
-        public async Task<bool> EndSession(long sessionId)
+        public async Task<SessionModel> RetrieveSession(Guid sessionId)
+        {
+            var session = await _corpContext.Sessions.FindAsync(sessionId);
+            if (session == null)
+                return null;
+
+            return new SessionModel { SessionId = session.SessionId };
+        }
+
+        public async Task<bool> EndSession(Guid sessionId)
         {
             var session = await _corpContext.Sessions.FindAsync(sessionId);
             if (session == null)

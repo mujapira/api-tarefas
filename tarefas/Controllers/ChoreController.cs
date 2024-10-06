@@ -24,7 +24,7 @@ namespace tarefas.Controllers
         [AllowAnonymous]
         [ProducesResponseType(typeof(List<ChoreModel>), 200)]
         [HttpGet("tarefas/{sessionId}")]
-        public async Task<IActionResult> GetChores(long sessionId)
+        public async Task<IActionResult> GetChores(Guid sessionId)
         {
             try
             {
@@ -46,8 +46,8 @@ namespace tarefas.Controllers
         {
             try
             {
-                await _service.CreateChore(formData);
-                return Ok();
+                var createdChore = await _service.CreateChore(formData);
+                return Ok(createdChore);
             }
             catch (Exception ex)
             {

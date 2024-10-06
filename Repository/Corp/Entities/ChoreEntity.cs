@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public bool IsCompleted { get; set; }
         public DateTime CreatedAt { get; set; }
-        public long SessionId { get; set; }
+        public Guid SessionId { get; set; }
         public virtual SessionEntity Session { get; set; }
     }
 }
